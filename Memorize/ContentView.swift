@@ -12,9 +12,16 @@ struct ContentView: View {
 
     var body: some View {
         VStack{
-            Text("Memorize!")
-                .font(.largeTitle)
-                .foregroundColor(Color.black)
+            HStack{
+                newGameButton.padding()
+                Spacer()
+                Text(viewModel.theme)
+                    .font(.largeTitle)
+                    .foregroundColor(Color.black)
+                Spacer()
+                Text("⭐️"+viewModel.score)
+                    .font(.largeTitle).padding()
+            }
             ScrollView{
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 85))]){
                     ForEach(viewModel.cards){ card in
@@ -22,60 +29,25 @@ struct ContentView: View {
                             .aspectRatio(2/3, contentMode: .fit)
                             .onTapGesture {
                                 viewModel.choose(card)
-                            }
+}
                     }
                 }
             }
-            .foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/)
+            .foregroundColor(viewModel.colorTheme)
             Spacer()
-            HStack{
-                vehiclesButton
-                Spacer()
-                foodButton
-                Spacer()
-                animalsButton
-            }
-            .padding(.horizontal)
-            .font(.largeTitle)
+            
             
         }
         .padding(.horizontal)
         
     }
-    var vehiclesButton: some View{
-        Button(action: {
-//            emojis = vehicles.shuffled()
-//            emojiCount = Int.random(in: 4...9)
-        }, label: {
-            VStack{
-                Image(systemName: "car").font(.largeTitle)
-                Text("Vehicles")
-                    .font(.body)
-            }
-        })
-    }
     
-    var foodButton: some View{
+    var newGameButton: some View{
         Button(action: {
-//            emojis = food.shuffled()
-//            emojiCount = Int.random(in: 4...9)
+            viewModel.creatNewGame()
         }, label: {
             VStack{
-                Image(systemName: "cart").font(.largeTitle)
-                Text("Food")
-                    .font(.body)
-            }
-        })
-    }
-    var animalsButton: some View{
-        Button(action: {
-//            emojis = animals.shuffled()
-//            emojiCount = Int.random(in: 4...9)
-        }, label: {
-            VStack{
-                Image(systemName: "hare").font(.largeTitle)
-                Text("Animals")
-                    .font(.body)
+                Image(systemName: "arrow.clockwise.circle").font(.title)
             }
         })
     }
